@@ -107,17 +107,27 @@ RUN . ~/.bashrc && \
 
 # Install RLBench (Note: there are different forks of RLBench)
 # PerAct setup
-# RUN git clone https://github.com/MohitShridhar/RLBench.git
-RUN git clone --no-checkout https://github.com/MohitShridhar/RLBench.git && \
-    cd RLBench && \
-    git checkout 085ce8671e01841c0d2355a76110fc51c5e9c9aa
+# # RUN git clone https://github.com/MohitShridhar/RLBench.git
+# RUN . ~/.bashrc && conda activate 3d_diffuser_actor && \
+#     cd RLBench; git checkout -b peract --track origin/peract; pip install -r requirements.txt; pip install -e .; cd ..;
+RUN git clone --no-checkout https://github.com/MohitShridhar/RLBench.git
 RUN . ~/.bashrc && conda activate 3d_diffuser_actor && \
-    cd RLBench; git checkout -b peract --track origin/peract; pip install -r requirements.txt; pip install -e .; cd ..;
+    cd RLBench; git checkout ad991951bc53e4f3b73b803a75cf4b7d55295cf7 --track origin/peract; pip install -r requirements.txt; pip install -e .; cd ..;
 
 # --------------------------------------------------------------- #
 # Install 3D Diffuser Actor
 # --------------------------------------------------------------- #
 RUN git clone https://github.com/tomato1mule/3d_diffuser_actor.git
+RUN . ~/.bashrc && conda activate 3d_diffuser_actor && \
+    cd 3d_diffuser_actor && pip install -e .
+
+# --------------------------------------------------------------- #
+# Misc
+# --------------------------------------------------------------- #
+RUN . ~/.bashrc && conda activate 3d_diffuser_actor && \
+    pip install jupyter
+
+
 
 
 # --------------------------------------------------------------- #
