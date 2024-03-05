@@ -16,6 +16,13 @@ RUN echo 'if [ "$color_prompt" = yes ]; then' >> ~/.bashrc && \
     echo 'fi' >> ~/.bashrc
 
 # --------------------------------------------------------------- #
+# Graphics-related
+# --------------------------------------------------------------- #
+RUN apt-get update && \
+    DEBIAN_FRONTEND="noninteractive" apt install -y --no-install-recommends \
+    xorg libxcb-randr0-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-0 libavcodec-dev libavformat-dev libswscale-dev
+
+# --------------------------------------------------------------- #
 # Install MiniConda and Mamba
 # https://fabiorosado.dev/blog/install-conda-in-docker/
 # https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html
@@ -36,14 +43,18 @@ COPY environment.yaml environment.yaml
 RUN . ~/.bashrc && \
     mamba env create -f environment.yaml
 
+RUN git clone https://github.com/tomato1mule/3d_diffuser_actor.git
+WORKDIR /root/3d_diffuser_actor
+
 # --------------------------------------------------------------- #
 # Install CoppeliaSim
 # --------------------------------------------------------------- #
+RUN mkdir PyREP
 RUN wget https://www.coppeliarobotics.com/files/V4_1_0/CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz  && \
-    tar -xf CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz -C $HOME && \
+    tar -xf CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz -C $pwd/PyRep && \
     rm CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz
 
-RUN echo "export COPPELIASIM_ROOT=$HOME/CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz" >> $HOME/.bashrc  && \ 
+RUN echo "export COPPELIASIM_ROOT=$pwd/PyRep/CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz" >> $HOME/.bashrc  && \ 
     echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:\$COPPELIASIM_ROOT" >> $HOME/.bashrc  && \
     echo "export QT_QPA_PLATFORM_PLUGIN_PATH=\$COPPELIASIM_ROOT" >> $HOME/.bashrc && \
     . $HOME/.bashrc
@@ -72,6 +83,7 @@ RUN . ~/.bashrc && \
 # --------------------------------------------------------------- #
 # Install Calvin locally
 # --------------------------------------------------------------- #
+
 
 # RUN git clone --recurse-submodules https://github.com/mees/calvin.git
 RUN git clone --recurse-submodules --no-checkout https://github.com/mees/calvin.git && \
@@ -117,17 +129,14 @@ RUN . ~/.bashrc && conda activate 3d_diffuser_actor && \
 # --------------------------------------------------------------- #
 # Install 3D Diffuser Actor
 # --------------------------------------------------------------- #
-RUN git clone https://github.com/tomato1mule/3d_diffuser_actor.git
 RUN . ~/.bashrc && conda activate 3d_diffuser_actor && \
-    cd 3d_diffuser_actor && pip install -e .
+    pip install -e .
 
 # --------------------------------------------------------------- #
 # Misc
 # --------------------------------------------------------------- #
 RUN . ~/.bashrc && conda activate 3d_diffuser_actor && \
     pip install jupyter
-
-
 
 
 # --------------------------------------------------------------- #
