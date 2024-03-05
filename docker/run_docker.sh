@@ -8,4 +8,4 @@ docker run \
 --device /dev/dri \
 --net=host \
 -it \
-elief:latest
+3diff:latest
