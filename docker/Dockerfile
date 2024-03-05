@@ -73,7 +73,11 @@ RUN . ~/.bashrc && \
 # Install Calvin locally
 # --------------------------------------------------------------- #
 
-RUN git clone --recurse-submodules https://github.com/mees/calvin.git
+# RUN git clone --recurse-submodules https://github.com/mees/calvin.git
+RUN git clone --recurse-submodules --no-checkout https://github.com/mees/calvin.git && \
+    cd calvin && \
+    git checkout 8315a697cf0a175b8e5dcb9a3dc96f9ea5d48580 && \
+    git submodule update --init --recursive
 RUN . ~/.bashrc && \
     conda activate 3d_diffuser_actor && \
     export CALVIN_ROOT=$(pwd)/calvin && \
@@ -92,7 +96,10 @@ RUN . ~/.bashrc && \
     pip install open3d
 
 # Install PyRep (https://github.com/stepjam/PyRep?tab=readme-ov-file#install)
-RUN git clone https://github.com/stepjam/PyRep.git
+# RUN git clone https://github.com/stepjam/PyRep.git
+RUN git clone --no-checkout https://github.com/stepjam/PyRep.git && \
+    cd PyRep && \
+    git checkout 076ca15c57f2495a4194da03565891ab1aaa317e
 RUN . ~/.bashrc && \
     conda activate 3d_diffuser_actor && \
     cd PyRep/ && \
@@ -100,8 +107,11 @@ RUN . ~/.bashrc && \
 
 # Install RLBench (Note: there are different forks of RLBench)
 # PerAct setup
+# RUN git clone https://github.com/MohitShridhar/RLBench.git
+RUN git clone --no-checkout https://github.com/MohitShridhar/RLBench.git && \
+    cd RLBench && \
+    git checkout 085ce8671e01841c0d2355a76110fc51c5e9c9aa
 RUN . ~/.bashrc && conda activate 3d_diffuser_actor && \
-    git clone https://github.com/MohitShridhar/RLBench.git && \
     cd RLBench; git checkout -b peract --track origin/peract; pip install -r requirements.txt; pip install -e .; cd ..;
 
 
