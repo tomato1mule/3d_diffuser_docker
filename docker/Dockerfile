@@ -103,3 +103,9 @@ RUN . ~/.bashrc && \
 RUN . ~/.bashrc && conda activate 3d_diffuser_actor && \
     git clone https://github.com/MohitShridhar/RLBench.git && \
     cd RLBench; git checkout -b peract --track origin/peract; pip install -r requirements.txt; pip install -e .; cd ..;
+
+
+# --------------------------------------------------------------- #
+# Always activate Conda Env.
+# --------------------------------------------------------------- #
+RUN echo 'conda activate 3d_diffuser_actor' >> ~/.bashrc
