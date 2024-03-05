@@ -2,9 +2,9 @@
 
 ## Installation
 ```bash
-sudo docker pull pytorch/pytorch:2.2.1-cuda12.1-cudnn8-devel
+sudo docker pull nvidia/cuda:11.7.1-cudnn8-devel-ubuntu20.04
 sudo docker build -t 3diff:latest docker/.
-bash run_docker.sh
+bash docker/run_docker.sh
 ```
 
 ## Troubleshooter
