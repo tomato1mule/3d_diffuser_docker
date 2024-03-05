@@ -114,6 +114,11 @@ RUN git clone --no-checkout https://github.com/MohitShridhar/RLBench.git && \
 RUN . ~/.bashrc && conda activate 3d_diffuser_actor && \
     cd RLBench; git checkout -b peract --track origin/peract; pip install -r requirements.txt; pip install -e .; cd ..;
 
+# --------------------------------------------------------------- #
+# Install 3D Diffuser Actor
+# --------------------------------------------------------------- #
+RUN git clone https://github.com/tomato1mule/3d_diffuser_actor.git
+
 
 # --------------------------------------------------------------- #
 # Always activate Conda Env.
