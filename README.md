@@ -8,6 +8,7 @@ bash docker/run_docker.sh
 
 # Optional
 docker cp data/peract/raw <container_id>:/root/3d_diffuser_actor/data/peract
+docker cp instructions <container_id>:/root/3d_diffuser_actor
 ```
 
 ## Troubleshooter

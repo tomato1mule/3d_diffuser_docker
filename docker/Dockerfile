@@ -20,7 +20,7 @@ RUN echo 'if [ "$color_prompt" = yes ]; then' >> ~/.bashrc && \
 # --------------------------------------------------------------- #
 RUN apt-get update && \
     DEBIAN_FRONTEND="noninteractive" apt install -y --no-install-recommends \
-    xorg libxcb-randr0-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-0 libavcodec-dev libavformat-dev libswscale-dev
+    xorg libxcb-randr0-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-0 libavcodec-dev libavformat-dev libswscale-dev libgl1-mesa-dev qt5-default
 
 # --------------------------------------------------------------- #
 # Install MiniConda and Mamba
@@ -147,4 +147,5 @@ RUN . ~/.bashrc && conda activate 3d_diffuser_actor && \
 # --------------------------------------------------------------- #
 # Always activate Conda Env.
 # --------------------------------------------------------------- #
-RUN echo 'conda activate 3d_diffuser_actor' >> ~/.bashrc
+# RUN echo 'conda activate 3d_diffuser_actor' >> ~/.bashrc
+RUN conda config --set auto_activate_base false
