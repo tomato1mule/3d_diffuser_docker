@@ -5,6 +5,9 @@
 sudo docker pull nvidia/cuda:11.7.1-cudnn8-devel-ubuntu20.04
 sudo docker build -t 3diff:latest docker/.
 bash docker/run_docker.sh
+
+# Optional
+docker cp data/peract/raw <container_id>:/root/3d_diffuser_actor/data/peract/raw
 ```
 
 ## Troubleshooter
