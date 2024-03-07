@@ -7,7 +7,7 @@ sudo docker build -t 3diff:latest docker/.
 bash docker/run_docker.sh
 
 # Optional
-docker cp data/peract/raw <container_id>:/root/3d_diffuser_actor/data/peract/raw
+docker cp data/peract/raw <container_id>:/root/3d_diffuser_actor/data/peract
 ```
 
 ## Troubleshooter
