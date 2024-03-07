@@ -49,12 +49,11 @@ WORKDIR /root/3d_diffuser_actor
 # --------------------------------------------------------------- #
 # Install CoppeliaSim
 # --------------------------------------------------------------- #
-RUN mkdir PyREP
 RUN wget https://www.coppeliarobotics.com/files/V4_1_0/CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz  && \
-    tar -xf CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz -C $pwd/PyRep && \
+    tar -xf CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz -C $HOME && \
     rm CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz
 
-RUN echo "export COPPELIASIM_ROOT=$pwd/PyRep/CoppeliaSim_Edu_V4_1_0_Ubuntu20_04.tar.xz" >> $HOME/.bashrc  && \ 
+RUN echo "export COPPELIASIM_ROOT=$HOME/CoppeliaSim_Edu_V4_1_0_Ubuntu20_04" >> $HOME/.bashrc  && \ 
     echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:\$COPPELIASIM_ROOT" >> $HOME/.bashrc  && \
     echo "export QT_QPA_PLATFORM_PLUGIN_PATH=\$COPPELIASIM_ROOT" >> $HOME/.bashrc && \
     . $HOME/.bashrc
@@ -92,7 +91,7 @@ RUN git clone --recurse-submodules --no-checkout https://github.com/mees/calvin.
     git submodule update --init --recursive
 RUN . ~/.bashrc && \
     conda activate 3d_diffuser_actor && \
-    export CALVIN_ROOT=$(pwd)/calvin && \
+    export CALVIN_ROOT=$PWD/calvin && \
     cd calvin && \
     cd calvin_env; git checkout main && \
     cd .. && \
@@ -115,7 +114,9 @@ RUN git clone --no-checkout https://github.com/stepjam/PyRep.git && \
 RUN . ~/.bashrc && \
     conda activate 3d_diffuser_actor && \
     cd PyRep/ && \
-    pip install -r requirements.txt; pip install -e .; cd ..
+    pip install -r requirements.txt && \
+    pip install -e . && \
+    cd ..
 
 # Install RLBench (Note: there are different forks of RLBench)
 # PerAct setup
@@ -124,7 +125,11 @@ RUN . ~/.bashrc && \
 #     cd RLBench; git checkout -b peract --track origin/peract; pip install -r requirements.txt; pip install -e .; cd ..;
 RUN git clone --no-checkout https://github.com/MohitShridhar/RLBench.git
 RUN . ~/.bashrc && conda activate 3d_diffuser_actor && \
-    cd RLBench; git checkout ad991951bc53e4f3b73b803a75cf4b7d55295cf7 --track origin/peract; pip install -r requirements.txt; pip install -e .; cd ..;
+    cd RLBench && \ 
+    git checkout ad991951bc53e4f3b73b803a75cf4b7d55295cf7 && \
+    pip install -r requirements.txt && \
+    pip install -e . && \
+    cd ..
 
 # --------------------------------------------------------------- #
 # Install 3D Diffuser Actor
