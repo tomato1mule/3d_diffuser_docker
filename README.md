@@ -5,10 +5,23 @@
 sudo docker pull nvidia/cuda:11.7.1-cudnn8-devel-ubuntu20.04
 sudo docker build -t 3diff:latest docker/.
 bash docker/run_docker.sh
+```
 
-# Optional
-docker cp data/peract/raw <container_id>:/root/3d_diffuser_actor/data/peract
-docker cp instructions <container_id>:/root/3d_diffuser_actor
+```bash
+cd /DIR/TO/DATASET/ROOT
+export CONTAINER_ID=<container_id> # run "docker ps" to find your container id
+
+# Copy downloaded instructions.
+docker cp instructions ${CONTAINER_ID}:/root/3d_diffuser_actor
+
+# Copy downloaded dataset.
+docker exec ${CONTAINER_ID} mkdir -p /root/3d_diffuser_actor/data/peract
+docker cp data/peract/raw ${CONTAINER_ID}:/root/3d_diffuser_actor/data/peract
+
+# Copy downloaded model params.
+docker exec ${CONTAINER_ID} mkdir -p /root/3d_diffuser_actor/train_logs
+docker cp diffuser_actor_peract.pth ${CONTAINER_ID}:/root/3d_diffuser_actor/train_logs/diffuser_actor_peract.pth
+docker cp act3d_peract.pth ${CONTAINER_ID}:/root/3d_diffuser_actor/train_logs/act3d_peract.pth
 ```
 
 ## Troubleshooter
