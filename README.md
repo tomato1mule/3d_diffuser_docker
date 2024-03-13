@@ -5,6 +5,8 @@
 sudo docker pull nvidia/cuda:11.7.1-cudnn8-devel-ubuntu20.04
 sudo docker build -t 3diff:latest docker/.
 bash docker/run_docker.sh
+# Or you may mount local drive by bash docker/run_docker.sh --volume "<DIR_TO_YOUR_DATASET>:/root/3d_diffuser_actor/data"
+# e.g., bash docker/run_docker.sh --volume "/mnt/disk2/data:/root/3d_diffuser_actor/data"
 ```
 
 ```bash
