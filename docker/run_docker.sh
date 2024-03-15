@@ -37,6 +37,7 @@ docker run \
 -e "TERM=xterm-256color" \
 --device /dev/dri \
 --net=host \
+--ipc=host \
 $volume \
 -it \
 3diff:latest
